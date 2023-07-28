@@ -1,9 +1,11 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+const bodyparser =require("body-parser");
 
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
 app.set('view engine','ejs');
 app.use(express.static("views"));
 const usernamedb = "sandeep";
@@ -16,9 +18,9 @@ app.get("/",(req,res)=>{
 app.post('/login',(req,res)=>{
   const {username,password} = req.body;
   if(username === usernamedb && password === passworddb){
-    res.send("login successfull");
+    res.render('home');
   }else{
-    res.send("login failed ");
+    res.render('index', { error: 'Incorrect username or password' });
   }
 })
 
